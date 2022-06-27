@@ -13,7 +13,7 @@ router.post('/',(req,res,next)=>{
     //選択肢に連番IDと投票数のパラメータを作成
     const choices = [];
     choicesList.forEach((element,index )=> {
-        choices.push({id:index,content:element,count:0,});
+        choices.push({id:index,content:element,count:0});
     });
     delete questionObj.choice;
     questionObj.choices = choices;
