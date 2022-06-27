@@ -13,7 +13,7 @@ router.post('/',(req,res,next)=>{
     //選択肢に連番IDと投票数のパラメータを作成
     const choices = [];
     choicesList.forEach((element,index )=> {
-        choices.push({id:index,content:element,count:0});
+        choices.push({id:index,content:element,count:0,});
     });
     delete questionObj.choice;
     questionObj.choices = choices;
@@ -23,6 +23,18 @@ router.post('/',(req,res,next)=>{
     try{
         fs.writeFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${questionId}.json`,questionJson,'utf8');
         res.send({id:questionId});
+    }catch(err){
+        console.log(err);
+    }
+});
+router.put('/:id',(req,res,next)=>{
+    try{
+        const questionJsonStr = fs.readFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,'utf8');
+        const questionJson = JSON.parse(questionJsonStr);
+        questionJson.choices[req.body.id].count++;
+        fs.writeFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,JSON.stringify(questionJson),'utf8');
+        console.log(questionJson);
+        res.json(questionJson);
     }catch(err){
         console.log(err);
     }

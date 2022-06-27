@@ -15,6 +15,19 @@ router.get('/:id',(req,res,next)=>{
         console.log(err);
     }
 });
+router.put('/:id',(req,res,next)=>{
+    try{
+        const questionJsonStr = fs.readFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,'utf8');
+        const questionJson = JSON.parse(questionJsonStr);
+        questionJson.choices[req.body.id].count++;
+        fs.writeFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,JSON.stringify(questionJson),'utf8');
+        console.log(questionJson);
+    }catch(err){
+        console.log(err);
+    }
 
+
+
+})
 
 module.exports = router;
