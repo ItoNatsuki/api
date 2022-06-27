@@ -23,8 +23,7 @@ let jsonList ={"67bc788e-877c-4dfc-af05-3d7eb845315c":testJson}
     
 //http://localhost:3000/vote/:idのミドルウェア群
 router.get('/:id',(req,res,next)=>{
-    tempJson = jsonList[req.params.id];
-    next();
+    
 });
 router.get('/:id',(req,res,next)=>{
     res.send(tempJson);
