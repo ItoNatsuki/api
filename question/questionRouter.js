@@ -3,6 +3,7 @@ const  express = require('express');
 const fs = require('fs');
 const router = express.Router();
 //http://localhost:3000/questionのミドルウェア群
+//質問作成
 router.post('/',(req,res,next)=>{
     //POSTで送信されたデータをjson形式(オブジェクト)に整形する(expressの内蔵ミドルウェア　express.json())
     questionObj = req.body;
@@ -27,13 +28,18 @@ router.post('/',(req,res,next)=>{
         console.log(err);
     }
 });
+//投票機能
 router.put('/:id',(req,res,next)=>{
     try{
+        //jsonファイル読み込み・変換
         const questionJsonStr = fs.readFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,'utf8');
         const questionJson = JSON.parse(questionJsonStr);
+        //投票
         questionJson.choices[req.body.id].count++;
+        //ファイル上書き
         fs.writeFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,JSON.stringify(questionJson),'utf8');
         console.log(questionJson);
+        //json返却
         res.json(questionJson);
     }catch(err){
         console.log(err);
