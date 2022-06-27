@@ -29,7 +29,7 @@ router.post('/',(req,res,next)=>{
     }
 });
 //投票機能
-router.put('/:id',(req,res,next)=>{
+router.put('/:id/add',(req,res,next)=>{
     try{
         //jsonファイル読み込み・変換
         const questionJsonStr = fs.readFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,'utf8');
