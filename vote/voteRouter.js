@@ -1,3 +1,4 @@
+const { signedCookie } = require('cookie-parser');
 const  express = require('express');
 const router = express.Router();
 const fs = require('fs');
@@ -7,7 +8,8 @@ const fs = require('fs');
 router.get('/:id',(req,res,next)=>{
     try{
         //JSONファイルを開く
-        const questionJsonStr = fs.readFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,'utf8');
+        const jsonsLocation = 'api\\jsons'
+        const questionJsonStr = fs.readFileSync(`${jsonsLocation}\\${req.params.id}.json`,'utf8');
         const questionJson = JSON.parse(questionJsonStr);
         //httpヘッダーのcontent-typeがjsonで送信される
         res.json(questionJson);
@@ -15,19 +17,34 @@ router.get('/:id',(req,res,next)=>{
         console.log(err);
     }
 });
-router.put('/:id',(req,res,next)=>{
+router.put('/add/:id',(req,res,next)=>{
     try{
-        const questionJsonStr = fs.readFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,'utf8');
+        const jsonsLocation = 'api\\jsons'
+        const questionJsonStr = fs.readFileSync(`${jsonsLocation}\\${req.params.id}.json`,'utf8');
         const questionJson = JSON.parse(questionJsonStr);
         questionJson.choices[req.body.id].count++;
-        fs.writeFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${req.params.id}.json`,JSON.stringify(questionJson),'utf8');
+        fs.writeFileSync(`${jsonsLocation}\\${req.params.id}.json`,JSON.stringify(questionJson),'utf8');
         console.log(questionJson);
     }catch(err){
         console.log(err);
     }
-
-
-
+});
+router.put('/sub/:id',(req,res,next)=>{
+    try{
+        const jsonsLocation = 'api\\jsons'
+        const questionJsonStr = fs.readFileSync(`${jsonsLocation}\\${req.params.id}.json`,'utf8');
+        const questionJson = JSON.parse(questionJsonStr);
+        if(questionJson.choices[req.body.id].count>0){
+            questionJson.choices[req.body.id].count--;
+        }else{
+            throw("もうゼロだよ");
+        }
+        console.log(`${jsonsLocation}\\${req.body.id}.json`);
+        fs.writeFileSync(`${jsonsLocation}${req.body.id}.json`,JSON.stringify(questionJson),'utf8');
+        console.log(questionJson);
+    }catch(err){
+        res.status(409).send(err);
+    }
 })
 
 module.exports = router;
