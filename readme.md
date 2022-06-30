@@ -4,7 +4,7 @@
 
 ___
 
-#　/vote/UUID 等でgetした際に返却するjsonは以下の通り  
+ /vote/UUID 等でgetした際に返却するjsonは以下の通り  
 
 ```
 {
