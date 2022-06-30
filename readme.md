@@ -1,4 +1,4 @@
-# /投票WebAppApiガイド
+# 投票WebAppApiガイド
 
 ## データ構造　　
 
@@ -6,7 +6,7 @@ ___
 
  /vote/UUID 等でgetした際に返却するjsonは以下の通り  
 
-```
+```json
 {
     "questionsId": "UUID",
     "questions": [
@@ -64,20 +64,41 @@ ___
         }
     ]
 }
-```  
-## 要素の説明  
-questionID  
-: 質問ファイルを特定するためのID
-　
+```
 
+## 要素の説明
 
+```json
+{
+    "questionsID":"UUID",
+    "questions":[...]
+}
+```
 
+questionsID
+:   質問ファイルを特定するためのID。UUIDで実装  
+questions:[...]
+:   質問を格納する配列  
 
+```json
+"questions": [
+        {
+            "questionID": 0,
+            "subject": "example",
+            "choices":[{"id":0,"content":"example","count":0},...]}
+]
+```
+
+questions[n].questionID  
+:   質問単体を特定するためのID。連番で実装  
+
+questions[n].subject  
+:   質問内容  
+
+questions[n].choices[...]  
+:   選択肢。特定用の連番`id`と内容の`content`、そして集計用の`count`をひとまとめにしたオブジェクトを格納するリスト
 
 ## /create
-
-
-
 
 ___
 
@@ -86,14 +107,11 @@ ___
 
 * **subject**  
 
-  - 主に質問内容を記述する
+    主に質問内容を記述する
 
-* **choice**   
-
-  - 選択肢を記述する。同じname属性で複数可  
+* **choice**
+  
+    選択肢を記述する。同じname属性で複数可  
 
 リクエストが成功すると200OKとともに以下のjsonを返す  
 `{id:UUID}`
-
-
-
