@@ -4,7 +4,7 @@
 
 ___
 
- /vote/UUID 等でgetした際に返却するjsonは以下の通り  
+ /vote/questionsId 等でgetした際に返却するjsonは以下の通り  
 
 ```json
 {
@@ -114,4 +114,9 @@ ___
     選択肢を記述する。同じname属性で複数可  
 
 リクエストが成功すると200OKとともに以下のjsonを返す  
-`{id:UUID}`
+`{questionsId:questionsId}`
+
+## /questionsId
+
+___
+**GETメソッドで**リクエストを飛ばすと質問の集計状況がかえって来る。  
