@@ -120,7 +120,7 @@ ___
 
 * **choice**
   
-    選択肢を記述する。同じname属性で複数可  
+    選択肢を記述する。 <u>同じname属性</u>で複数可  
 
 リクエストが成功すると200OKとともに以下のjsonを返す  
 `{questionsId:questionsId}`
@@ -128,8 +128,9 @@ ___
 ## /questionsId
 
 ___
-/questionId/nで質問をピンポイントで選択することも可能  
-(例:/questionID/3で`questionId=3`の質問だけの集計状況確認、削除ができる)  
+`/questionId/n`で質問をピンポイントで選択することも可能  
+
+(例:`/questionID/3`で`questionId=3`の質問だけの集計状況確認、削除ができる)  
 
 **GET**
 : リクエストを飛ばすと質問の集計状況がかえって来る。  
@@ -138,10 +139,3 @@ ___
 :質問を削除したい場合に使う
 
 ## /questionId/title_list
-
-
-___
-
-
-
-___
