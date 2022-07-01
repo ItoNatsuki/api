@@ -9,6 +9,12 @@ ___
 ```json
 {
     "questionsId": "UUID",
+    "settings":{
+        "test1":true,
+        "test2":false,
+        "test3":true,
+        "test4":false
+    },
     "questions": [
         {
             "questionID": 0,
@@ -71,7 +77,8 @@ ___
 ```json
 {
     "questionsID":"UUID",
-    "questions":[...]
+    "questions":[...],
+    "settings":{...}
 }
 ```
 
@@ -79,6 +86,8 @@ questionsID
 :   質問ファイルを特定するためのID。UUIDで実装  
 questions:[...]
 :   質問を格納する配列  
+settings:{...}
+:   質問の詳細設定を持つオブジェクト
 
 ```json
 "questions": [
@@ -120,7 +129,7 @@ ___
 
 ___
 /questionId/nで質問をピンポイントで選択することも可能  
-(例:/questionID/3で`questionId=3`の質問だけの集計状況、削除ができる)  
+(例:/questionID/3で`questionId=3`の質問だけの集計状況確認、削除ができる)  
 
 **GET**
 : リクエストを飛ばすと質問の集計状況がかえって来る。  
