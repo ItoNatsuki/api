@@ -1,29 +1,64 @@
 const { v4: uuidv4 } = require('uuid');
 const  express = require('express');
 const fs = require('fs');
+const fileLeader = require('../../moduls/fileLeader');
+const createQuestionObj = require('../../moduls/createQuestionObj')
 const router = express.Router();
-//http://localhost:3000/questionのミドルウェア群
+const DEFAULT_SETTINGS ={
+    "test1":true,
+    "test2":true,
+    "test3":true
+}
+//http://localhost:3000/のミドルウェア群
 //質問作成
-router.post('/',(req,res,next)=>{
+router.post('/create',(req,res,next)=>{
     //POSTで送信されたデータをjson形式(オブジェクト)に整形する(expressの内蔵ミドルウェア　express.json())
-    createObj = req.body;
     //idを生成し、質問データにパラメータとして付与
+    /////////////////////////////////////////////////////////////
+    const newQuestionsObj={}
     const questionId = uuidv4();
-    createObj.id = questionId;
-    choicesList = req.body.choice;
+    newQuestionsObj.questionsId = questionId;
+    newQuestionsObj.settings=DEFAULT_SETTINGS;
+    newQuestionsObj.questions=[];
+    const questionObj = createQuestionObj(req.body);
+    /////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////
+/*
+    choicesList = createObj.choice;
     //選択肢に連番IDと投票数のパラメータを作成
     const choices = [];
     choicesList.forEach((element,index )=> {
         choices.push({id:index,content:element,count:0});
     });
     delete createObj.choice;
+    createObj.questionId=0;
     createObj.choices = choices;
+    ////////////////////////////////////////////////////////////////////
+    */
+    newQuestionsObj.questions.push(questionObj);
     //オブジェクトからJSON文字列に変換
-    const questionJson = JSON.stringify(createObj);
+    const questionJson = JSON.stringify(newQuestionsObj);
     //ファイル書き込み
     try{
         fs.writeFileSync(`C:\\Users\\mamet\\Documents\\my_devs\\nodejs\\web_vote_app\\api\\jsons\\${questionId}.json`,questionJson,'utf8');
-        res.send({id:questionId});
+        res.send({questionsId:questionId});
+    }catch(err){
+        console.log(err);
+    }
+});
+//GETメソッド(集計状況の確認)
+router.get('/:id',(req,res,next)=>{
+    try{
+        const questionJson = fileLeader(req.params.id);
+        //JSONファイルを開く
+        /*
+        const jsonsLocation = 'api\\jsons'
+        const questionJsonStr = fs.readFileSync(`${jsonsLocation}\\${req.params.id}.json`,'utf8');
+        const questionJson = JSON.parse(questionJsonStr);
+        */
+        //httpヘッダーのcontent-typeがjsonで送信される
+        res.json(questionJson);
     }catch(err){
         console.log(err);
     }

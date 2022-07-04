@@ -9,6 +9,7 @@ ___
 ```json
 {
     "questionsId": "UUID",
+    "deadlineFlag":false,
     "settings":{
         "test1":true,
         "test2":false,
@@ -18,6 +19,7 @@ ___
     "questions": [
         {
             "questionID": 0,
+            "deadlineFlag":false,
             "subject": "example",
             "choices": [
                 {
@@ -45,6 +47,7 @@ ___
         {
             "questionID": 1,
             "subject": "example",
+            "deadlineFlag":false,
             "choices": [
                 {
                     "id": 0,
@@ -93,6 +96,7 @@ settings:{...}
 "questions": [
         {
             "questionID": 0,
+            "deadlineFlag":false,
             "subject": "example",
             "choices":[{"id":0,"content":"example","count":0},...]}
 ]
@@ -101,13 +105,16 @@ settings:{...}
 questions[n].questionID  
 :   質問単体を特定するためのID。連番で実装  
 
+questions[n].deadlineFlag  
+:質問締め切りフラグ  
+
 questions[n].subject  
 :   質問内容  
 
 questions[n].choices[...]  
 :   選択肢。特定用の連番`id`と内容の`content`、そして集計用の`count`をひとまとめにしたオブジェクトを格納するリスト
 
-## /create
+## apis/create
 
 ___
 
@@ -120,22 +127,28 @@ ___
 
 * **choice**
   
-    選択肢を記述する。 <u>同じname属性</u>で複数可  
+    選択肢を記述する。 **同じname**属性で複数可  
 
 リクエストが成功すると200OKとともに以下のjsonを返す  
 `{questionsId:questionsId}`
 
-## /questionsId
+## apis/questionsId
 
 ___
-`/questionId/n`で質問をピンポイントで選択することも可能  
+(未実装)`/questionId/n`で質問をピンポイントで選択することも可能  
 
 (例:`/questionID/3`で`questionId=3`の質問だけの集計状況確認、削除ができる)  
 
 **GET**
 : リクエストを飛ばすと質問の集計状況がかえって来る。  
 
-**DELETE**
+(未実装)**DELETE**
 :質問を削除したい場合に使う
 
-## /questionId/title_list
+## apis/title_list/questionId/　(未実装)
+
+___
+
+(未実装) **GET**
+:すべての質問の主題と問題IDを返す
+
